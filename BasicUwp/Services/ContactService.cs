@@ -5,14 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Contacts;
 using Newtonsoft.Json;
+using BasicUwp.Models;
+using System;
+using Contact = Windows.ApplicationModel.Contacts.Contact;
 
 namespace BasicUwp.Services
 {
     public class ContactService : IContactService
     {
+        // private IContactService _contactServiceImplementation;
+
         // private params
         private const string ServiceEndpoint =
-            "http://localhost:8472/api/Contacts";
+            "http://localhost:53181/api/Contacts";
         // public attributes
 
         // inherited method
@@ -37,6 +42,11 @@ namespace BasicUwp.Services
                     new StringContent(json, Encoding.UTF8,
                         "application/json"));
             }
+        }
+
+        internal Task UpdateAsync(Models.Contact contact)
+        {
+            throw new NotImplementedException();
         }
     }
 }

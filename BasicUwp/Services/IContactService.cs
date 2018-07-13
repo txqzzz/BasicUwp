@@ -15,6 +15,7 @@ namespace BasicUwp.Services
         /// </summary>
         /// <returns>all_contacts</returns>
         Task<IEnumerable<Contact>> ListAsync();
+
         /// <summary>
         /// update_contacts
         /// </summary>
