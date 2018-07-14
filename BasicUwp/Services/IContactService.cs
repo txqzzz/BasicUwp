@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Contacts;
+using BasicUwp.Models;
 
 namespace BasicUwp.Services
 {

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace BasicUwp.Models
 {
-    class Contact
+    public class Contact
     {
         /// <summary>
         /// <class>primary_key</class>

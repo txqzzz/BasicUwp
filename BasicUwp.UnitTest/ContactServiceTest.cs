@@ -23,7 +23,21 @@ namespace BasicUwp.UnitTest
             //Assert.AreEqual("http://facebook.com/se", contacts.Last().Link);
             //Assert.AreEqual("1999",contacts.First().Birthday);
             //Assert.AreEqual("", contacts[10].Lastname);
-            
+        }
+
+        [TestMethod]
+        public async Task TestUpdateAsync()
+        {
+            var contactService = new ContactService();
+            var contacts = (await contactService.ListAsync()).ToList();
+            var firstContact = contacts[0];
+            Assert.AreEqual("Kyle",firstContact.FirstName);
+            firstContact.FirstName = "Shujie";
+            await contactService.UpdateAsync(firstContact);
+
+            contacts = (await contactService.ListAsync()).ToList();
+            firstContact = contacts[0];
+            Assert.AreEqual("Shujie",contacts[0].FirstName);
         }
     }
 }

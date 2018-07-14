@@ -7,9 +7,111 @@
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       NavigationCacheMode="Enabled">
+   
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates"
+                              CurrentStateChanged="AdaptiveStates_OnCurrentStateChanged">
+                <VisualState x:Name="DefaultState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                </VisualState>
 
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
 
-    <Grid Name="LayoutRoot">
-        <Button Content="Button" HorizontalAlignment="Left" Margin="470,252,0,0" VerticalAlignment="Top" Height="92" Width="203" Click="Button_Click"/>
+                    <VisualState.Setters>
+                        <Setter Target="MasterColumn.Width"
+                                Value="*" />
+                        <Setter Target="DetailColumn.Width"
+                                Value="0" />
+                        <Setter Target="ContactListView.SelectionMode"
+                                Value="None"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320"
+                              x:Name="MasterColumn" />
+            <ColumnDefinition Width="*"
+                              x:Name="DetailColumn" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Contacts"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Style="{ThemeResource TitleTextBlockStyle}"
+                   Margin="12,8,8,8"
+                   Grid.ColumnSpan="2" />
+
+        <Grid Grid.Column="0"
+              Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <RefreshContainer Name="RefreshContainer"
+                              Grid.Row="0"
+                              RefreshRequested="RefreshContainer_OnRefreshRequested">
+                <ListView Name="ContactListView"
+                          IsItemClickEnabled="True"
+                          ItemClick="ContactListView_OnItemClick">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding FirstName}" />
+                                <TextBlock Text="{Binding LastName}"
+                                           Margin="4,0,0,0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </RefreshContainer>
+
+            <CommandBar Grid.Row="1"
+                        OverflowButtonVisibility="Collapsed"
+                        DefaultLabelPosition="Right">
+                <AppBarButton Icon="Refresh"
+                              Label="Refresh"
+                              Name="RefreshButton"
+                              Click="RefreshButton_OnClick" />
+            </CommandBar>
+        </Grid>
+
+        <StackPanel Grid.Column="1"
+                    Grid.Row="1"
+                    Padding="24">
+            <CommandBar Background="Transparent"
+                        OverflowButtonVisibility="Collapsed"
+                        DefaultLabelPosition="Right">
+                <AppBarButton Name="SaveButton"
+                              Icon="Save"
+                              Label="Save"
+                              Click="SaveButton_OnClick" />
+            </CommandBar>
+
+            <TextBlock Text="First Name"
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Margin="0,0,0,4" />
+
+            <TextBox Name="FirstNameTextBox" />
+
+            <TextBlock Text="Last Name"
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Margin="0,12,0,4" />
+
+            <TextBox Name="LastNameTextBox" />
+        </StackPanel>
     </Grid>
 </Page>

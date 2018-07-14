@@ -7,7 +7,7 @@ using Windows.ApplicationModel.Contacts;
 using Newtonsoft.Json;
 using BasicUwp.Models;
 using System;
-using Contact = Windows.ApplicationModel.Contacts.Contact;
+using Contact = BasicUwp.Models.Contact;
 
 namespace BasicUwp.Services
 {
@@ -16,7 +16,7 @@ namespace BasicUwp.Services
         // private IContactService _contactServiceImplementation;
 
         // private params
-        private const string ServiceEndpoint =
+        private const string ServicePort =
             "http://localhost:53181/api/Contacts";
         // public attributes
 
@@ -27,26 +27,21 @@ namespace BasicUwp.Services
         {
             using (var client = new HttpClient())
             {
-                var json = await client.GetStringAsync(ServiceEndpoint);
+                var json = await client.GetStringAsync(ServicePort);
                 return JsonConvert.DeserializeObject<Contact[]>(json);
             }
         }
 
         public async Task UpdateAsync(Contact contact)
         {
-
             using (var client = new HttpClient())
             {
                 var json = JsonConvert.SerializeObject(contact);
-                await client.PutAsync(ServiceEndpoint + "/" + contact.Id,
+                await client.PutAsync(ServicePort + "/" + contact.Id,
                     new StringContent(json, Encoding.UTF8,
                         "application/json"));
+                // MIME: file extension name
             }
-        }
-
-        internal Task UpdateAsync(Models.Contact contact)
-        {
-            throw new NotImplementedException();
         }
     }
 }
