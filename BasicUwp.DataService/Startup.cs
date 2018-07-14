@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BasicUwp
+namespace BasicUwp.DataService
 {
     public class Startup
     {
@@ -23,6 +23,10 @@ namespace BasicUwp
             services.AddDbContext<DataContext>(opt => 
                 opt.UseInMemoryDatabase("ContactDatabase"));
             services.AddMvc();
+
+            // services.AddDbContext<DataContext>(opt =>
+            //     opt.UseSqlServer("ContactDatabase"));
+            // services.AddMvc();
 
             var serviceProvider = services.BuildServiceProvider();
             SeedData(serviceProvider.GetService<DataContext>());
@@ -42,7 +46,9 @@ namespace BasicUwp
 
         }
         public static void SeedData(DataContext context)
-        {
+        { 
+            //context.Database.EnsureCreated();
+
             context.Contacts.Add(new Contact
             {
                 FirstName = "Kyle",
